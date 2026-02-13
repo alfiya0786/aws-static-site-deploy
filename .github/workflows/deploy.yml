@@ -21,28 +21,23 @@ jobs:
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
-      with:
-         terraform_version: 1.14.5
 
     - name: Terraform Init
       run: terraform init
 
-    # - name: Terraform Apply
-    #   run: terraform apply -auto-approve
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
 
-    - name: Terraform Destroy
-      run: terraform destroy -auto-approve
+    - name: Get Distribution ID
+      id: tfoutput
+      run: |
+        echo "DIST_ID=$(terraform output -raw cloudfront_distribution_id)" >> $GITHUB_ENV
 
-    # - name: Terraform output
-    #   run: terraform output
+    - name: Wait for CloudFront Deployment
+      run: sleep 120
 
-    # - name: Get Distribution ID
-    #   id: tfoutput
-    #   run: |
-    #     echo "DIST_ID=$(terraform output -raw cloudfront_distribution_id)" >> $GITHUB_ENV
-
-    # - name: Invalidate CloudFront Cache
-    #   run: |
-    #     aws cloudfront create-invalidation \
-    #       --distribution-id $DIST_ID \
-    #       --paths "/*"
+    - name: Invalidate CloudFront Cache
+      run: |
+        aws cloudfront create-invalidation \
+          --distribution-id $DIST_ID \
+          --paths "/*"
