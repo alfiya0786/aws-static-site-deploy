@@ -105,7 +105,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     origin_path = "/www"
   }
 
-  enabled             = true
+  enabled             = false
   is_ipv6_enabled     = true
   comment             = "Some comment"
   default_root_object = "index.html"
