@@ -76,7 +76,7 @@ jobs:
       run: terraform init -input=false
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve -input=false
+      run: terraform apply -auto-approve -lock=false
 
     - name: Get Distribution ID
       run: echo "DIST_ID=$(terraform output -raw cloudfront_distribution_id)" >> $GITHUB_ENV
