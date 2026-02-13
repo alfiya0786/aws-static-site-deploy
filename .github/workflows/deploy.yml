@@ -30,6 +30,9 @@ jobs:
     - name: Terraform Apply
       run: terraform apply -auto-approve
 
+    - name: Terraform output
+      run: terraform output
+
     - name: Get Distribution ID
       id: tfoutput
       run: |
