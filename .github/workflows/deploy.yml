@@ -79,7 +79,7 @@ jobs:
       run: terraform apply -auto-approve -lock=false
 
     - name: Get Distribution ID
-      run: echo "DIST_ID=$(terraform output -raw cloudfront_distribution_id)" >> $GITHUB_ENV
+      run: echo "DIST_ID=$(terraform output -raw cf_distribution_id)" >> $GITHUB_ENV
 
     - name: Wait for CloudFront Deployment
       run: sleep 120
